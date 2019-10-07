@@ -1,5 +1,7 @@
 *Now this is my begain of using this amazing item!
 
+**C++作业***（国庆节）
+
 #2.23（p51）
 答：若指针拥有一个合法值，则能将它用在条件表达式中。使用非法指针作为条件或者参与比较都会报错。
 
@@ -106,7 +108,76 @@ int main()
     return 0;
 }
 
+
+**空格分隔多字符串**：
+***代码***：
+#include <iostream>
+#include <string>
+
+using std::string;
+using std::cin;
+using std::cout;
+using std::endl;
+
+int main()
+{
+    string s1, s2;
+    while (cin >> s2)
+    s1 +=  " " + s2;
+    cout << s1 << endl;
+    return 0;
+ } 
+ 
+ 
 #3.20（p94）
+***代码一：***
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    int v1;
+    vector<int> ivec;
+    while (cin >> v1)
+        ivec.push_back(v1);
+
+    for (decltype(ivec.size()) i = 0; i != ivec.size()-1; ++i)
+       {
+          //for(decltype(ivec.size()) j = i; j!=ivec.size()-1;++j)
+          //{
+            auto sum = ivec[i] + ivec[i+1];
+            cout << sum << " "; 
+          //}
+       }
+       cout << endl;
+    return 0;
+}
+
+***代码二：***
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    int v1;
+    vector<int> ivec;
+    while (cin >> v1)
+        ivec.push_back(v1);
+
+    for (decltype(ivec.size()) i = 0; i != ivec.size(); ++i)
+        {
+        auto sum = ivec[i] + ivec[ivec.size()-1-i];
+        cout << sum << " "; 
+        }
+        cout << endl;
+    return 0;
+}
 
 
 **#3.23（p99）**
@@ -157,17 +228,111 @@ cout<<"n="<<n<<"m="<<m;
 (c)：重置一个double类型的变量。合法。
 
 #7.16（p241）
-
+1.在类的定义中对于访问说明符出现的位置和次数没有限定；
+2.///
+3.定义在public说明符之后-构造函数和一部分成员函数，public成员定义类的接口；
+4.定义在private说明符之后的成员可以被类的成员函数访问，但不能被使用该类的代码访问，private部分隐藏类的**实现细节**。
 
 #7.27（p249）
+***代码：***
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Screen{
+public:
+    typedef std::string::size_type pos;
+    Screen() = default;
+    Screen(pos ht,pos wd, char c) : height(ht),width(wd),contents(ht*wd,c){}
+    char get() const
+    {
+        return contents[cursor];
+    }
+    inline char get(pos ht, pos wd) const;
+    Screen &move(pos r, pos c);
+    Screen &set(char);
+    Screen &set(pos,pos,char); 
+    Screen &display(std::ostream &os)
+    {
+        do_display(os);
+        return *this;
+    }
+    const Screen &display(std::ostream &os) const
+    {
+        do_display(os);
+        return *this;
+    }
+private:
+    pos cursor = 0;
+    pos height = 0, width = 0;
+    std::string contents;   
+
+    void do_display(std::ostream &os) const
+    {
+        os << contents;
+    }
+}; 
+
+inline Screen& Screen::move(pos r, pos c)
+{
+    pos row = r * width;
+    cursor = row + c;
+    return *this;
+}
+
+char Screen::get(pos r, pos c) const
+{
+    pos row = r * width;
+    return contents[row + c];
+}
+
+inline Screen &Screen::set(char c)
+{
+    contents[cursor] = c;
+    return *this;
+}
+
+inline Screen &Screen::set(pos r, pos col, char ch)
+{
+    contents[r*width + col] = ch;
+    return *this;
+}
+
+int main()
+{
+    Screen s1(20,20,'F');
+    cout << s1.get(2,3) << endl;
+
+    Screen myScreen(5,5,'X');
+    myScreen.move(4,0).set('#').display(cout);
+    cout << "\n";
+    myScreen.display(cout);
+    cout << "\n";  
+    return 0;
+}
+
 
 #7.49（p266）
+(a).临时变量作用，调用后，丢弃s的值，i.combine()的结果保存到combine的返回值中；
+(b).调用后，s发生改变，i.combine（）结果给返回值；
+(c).s是const Sales_data&的，调用后，s值不发生改变,i.combine()的结果给返回值。
 
 #7.58（p272）
 
+//example.h
+class Example{
+public:
+    static double rate = 6.5;//错误 改正static double rate；
+static const int vecSize = 20;
+static vector<double> vec(vecSize);//❌-改为static vector<double> vec；
 
+};
 
-
+//example.C
+#include “example.h”
+Double Example::rate;//❌-改为Example::rate;
+Vector<double> Example::vec;//❌-改为Example::vec;
 
 
 
