@@ -47,16 +47,16 @@ using std::endl;
 
 int main()
 {
-    string s1, s2;
-    cout << "Please input string s1 and s2:" << endl;
+    string a, b;
+    cout << "请输入a和b的值:" << endl;
     while(cin >> s1 >> s2)
     {
     if (s1==s2)
-      cout << "String s1 and s2 are same! " << endl;
-    else if(s1 > s2)
-      cout << "String s1 is bigger and s1 is: " << s1 << endl;
+      cout << "a与b相等!" << endl;
+    else if(a > b)
+      cout << "字符串a比b长 ": << a << endl;
     else 
-      cout << "String s2 is bigger and s2 is: " << s2 << endl;
+      cout << "字符串a比b短": << b << endl;
     }
     return 0;
  }
@@ -79,11 +79,12 @@ int main()
     while (cin >> s1 >> s2)
     {
         if (s1.size() == s2.size())
-        cout << "s1 and s2 have the same size! "<<endl;
+        cout << "s1与s2等长"<<endl;
+        cout << "是 "<<endl;
         else if(s1.size() > s2.size())
-        cout << "The size of s1 is bigger : " << s1 << endl;
+        cout << "s1要长 : " << s1 << endl;
         else 
-        cout << "The size of s2 is bigger : " << s2 << endl;
+        cout << "s2要长 : " << s2 << endl;
     }
     return 0;
 }
@@ -101,12 +102,13 @@ using std::endl;
 
 int main()
 {
-    string s1, s2;
+    string s1, s2，s;
+    s=s1;
     while (cin >> s2)
     {
-        s1 += s2;
+        s += s2;
     }
-    cout << s1 << endl;
+    cout << s << endl;
     return 0;
 }
 ```
@@ -193,9 +195,9 @@ int main()
 using namespace std;
 int main()
 {
-	vector<int>ivec(10,1);//定义一个int类型的容器ivec
+	vector<int>ivec(10,1);//定义容器ivec
 	int ival;
-	cout<<"请输入10个整型数字！"<<endl;
+	cout<<"请输入10个整数："<<endl;
 	for(vector<int>::iterator iter = ivec.begin();iter<ivec.end();++iter)//使用迭代器访问vector中的元素
 	{
 	   cout<<(*iter)*2<<endl;
@@ -211,7 +213,7 @@ int main()
 
 #6.20（p188）
 ```
-void change(int *q,int *p)
+void exchange(int *q,int *p)
 {
   int t;
   t=*p;
@@ -220,7 +222,7 @@ void change(int *q,int *p)
 }
 int n,m;
 cin>>n>>m;
-change(&n,&m);
+exchange(&n,&m);
 cout<<"n="<<n<<"m="<<m;
 ```
 #6.19(p193)
