@@ -17,6 +17,7 @@ c).ip为int类型指针，ip2为int类型。
 整型常量-i、j2；整型常量引用-k、k2；整型-j；整型指针-p；
 
 **验证程序**：
+```
 const int i = 42;
 auto j = i;//i为常量，auto判断会忽略顶层const，故j为int变量
 j = 0; //赋值成功，j为int型
@@ -30,7 +31,7 @@ auto *p = &i;
 const auto j2 = i, &k2 = i; 
 // j2 = 0; //赋值失败，j2为const int，j2值不可修改
 // k2 = 0; //赋值失败，k2为const int&, k2值不可修改
-
+```
 #3.4（p81）
 
 **判断字符串大小**：
