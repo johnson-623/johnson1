@@ -18,19 +18,19 @@ c).ip为int类型指针，ip2为int类型。
 
 **验证程序**：
 ```
-const int i = 42;
-auto j = i;//i为常量，auto判断会忽略顶层const，故j为int变量
-j = 0; //赋值成功，j为int型
+const int i = 42;i为常量
+auto j = i;//j为整形
+j = 0; //j为整型
 
-const auto &k = i; // 
-// k = 0; //赋值失败，因为k为const int&
+const auto &k = i; 
+// k = 0; //失败，k为整型常量的引用，不可修改
 
 auto *p = &i;
-// *p = 0; //赋值失败，*p不可修改，因为p为const int *
+// *p = 0; //失败，p为指向i的整型指针，i不可修改
 
 const auto j2 = i, &k2 = i; 
-// j2 = 0; //赋值失败，j2为const int，j2值不可修改
-// k2 = 0; //赋值失败，k2为const int&, k2值不可修改
+// j2 = 0; //失败，j2为整型常量，不可修改
+// k2 = 0; //失败，k2为、整型常量i的引用, 不可修改
 ```
 #3.4（p81）
 
