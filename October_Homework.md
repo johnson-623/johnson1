@@ -20,13 +20,13 @@ vec目前包含25个元素
 ## P324	9.43
 从一个string拷贝字符时，如果开始位置大于size，则会抛出out_of_range的异常。
 代码如下：
-`#include <iostream>
-using namespace std;
-void huan(string &s, string oldVal, string newVal)
-{
-    string::size_type loc= 0;//loc表示初始位置
-    
-    while (loc<s.length())
+```
+#include <iostream>   
+using namespace std;    
+void huan(string &s, string oldVal, string newVal)   
+{    
+    string::size_type loc= 0;//loc表示初始位置    
+    while (loc<s.length())   
     {
         loc = s.find(oldVal, loc);//从零号位置开始查找
         if (loc == string::npos) //string::npos 为m为搜寻到oldVal的情况
@@ -34,17 +34,17 @@ void huan(string &s, string oldVal, string newVal)
         s.erase(loc, oldVal.length());//删除旧字符
         s.insert(loc, newVal);//插入新字符
         loc = loc + newVal.length();//更新loc的最后位置
-    }
-}
- 
-int main(int argc,char *argv[])
-{
-    string s = "tho thru";
-    huan(s, "tho", "though");//替换简写的单词
-    huan(s, "thru", "through");
-    cout << s << endl;
-    return 0;
-}`
+    }   
+}    
+int main(int argc,char *argv[])    
+{   
+    string s = "tho thru";    
+    huan(s, "tho", "though");//替换简写的单词   
+    huan(s, "thru", "through");      
+    cout << s << endl;    
+    return 0;    
+}    
+```
 
 ----
 P331	9.52
