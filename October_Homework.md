@@ -1,17 +1,32 @@
-十月份作业
-#C++
-# 十月份C++作业
+# 十月份C++作业             By18061138    赵崇尚
 ## P301	9.1
-
-
-
-
-
-
+Q:* *对于下面的程序任务，vector、deque和list哪种容器最为适合？解释你的选择的理由。如果没有哪一种容器优于其他容器，也请解释理由。*   
+(a) 读取固定数量的单词，将它们按字典序插入到容器中。我们将在下一章中看到，关联容器更适合这个问题。   
+(b) 读取未知数量的单词，总是将单词插入到末尾。删除操作在头部进行。
+(c) 从一个文件读取未知数量的整数。将这些数排序，然后将它们打印到标准输出。   
+答：   
+（a）列表（list）；题目要求按字典顺序插入容器，可能涉及中间部位插入。 
+（b）队列（deque）；涉及容器头尾的插入和删除操作，队列比较合适。
+（c）vector。需要容器内元素排序，vector支持随机访问。
 
 ---
 ## P302	9.20
-
+Q：*编写程序，从一个list拷贝元素到两个deque中。值为偶数的所有元素都拷贝到一个deque中，而奇数值元素都拷贝到另一个deque中。*
+```
+int main(){
+    list<int> a = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    deque<int> ji,ou;
+    list<int>::iterator iter = a.begin();
+    while (iter != a.end()){
+        if (*iter % 2 == 1)
+            ou.push_back(*iter);
+        else
+            ji.push_back(*iter);
+		++iter;
+    }
+    return 0;
+}
+```
 
 
 ---
@@ -21,7 +36,7 @@ vec目前包含25个元素
 (1). `vec.resize(100)`:将75个值为0的元素添加到vec的末尾；   
 (2).`vec.resize(10)`:将保留vec的前10的元素，容器后部的15个元素将被删除。 
 
-----
+---
 ## P324	9.43
 从一个string拷贝字符时，如果开始位置大于size，则会抛出out_of_range的异常。
 代码如下：
@@ -50,8 +65,9 @@ int main(int argc,char *argv[])
     return 0;    
 }    
 ```
+*编译已通过*
 
-----
+---
 ## P331	9.52
 代码如下：
 ```
@@ -86,10 +102,8 @@ int main(int argc,char *argv[])
     cout<< charstack.size()<<endl;
     cout<< int(charstack.top())<<endl;
     cout<< sum<<endl;
-}//以上代码对括号中表达式的处理仅为加法
+}//以上代码对括号中表达式的处理仅为加法（编译问题暂未解决）
 ```
-
-
 
 
 ---
@@ -104,8 +118,8 @@ sum即为s中各元素之和。
 
 ---
 ## P349 10.15
-lambda表达式：[](){};
-`[a](const int b){return a+b};`
+lambda表达式：`[](){};`    
+`[a](const int b){return a+b};`    
 
 ---
 ## P365	10.34
@@ -210,7 +224,58 @@ int main()
 ```
 单词替换代码如下：
 ```
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <map>
+using namespace std;
 
+
+map<string, string> buildMap(ifstream &map_file) {
+	unordered_map<string, string> trans_map;
+	string key;
+	string value;
+	while (map_file >> key && getline(map_file, value)) {
+		if (value.size() > 1)
+			trans_map[key] = value.substr(1);
+		else
+			trans_map[key] = value;
+	}
+	return trans_map;
+}
+
+const string& transform(const string &s, const unordered_map<string, string> &m) {
+	auto map_iter = m.find(s);
+	if (map_iter != m.cend())
+		return map_iter->second;
+	else
+		return s;
+}
+
+void word_transform(ifstream &map_file, ifstream &input) {
+	auto trans_map = buildMap(map_file);
+	string text;
+	while (getline(input, text)) {
+		istringstream stream(text);    //读取每个单词
+		string word;
+		bool firstword = true;
+		while (stream >> word) {
+			if (firstword)
+				firstword = false;
+			else
+				cout << " ";
+			cout << transform(word, trans_map);
+		}
+		cout << endl;
+	}
+}
+
+int main(int argc,  char* argv[]) {
+	ifstream map_file(argv[1]), input(argv[2]);
+	word_transform(map_file, input);
+	return 0;
+}
 ```
 
 ---
@@ -317,37 +382,137 @@ Message Message::operator=(Message &&rhs)
 
 ---
 P485	13.58
+Q:编写新版本的 Foo 类，其 sorted 函数中有打印语句，测试这个类，来验证你对前两题的答案是否正确。
+代码如下：
+```
+class Foo
+{
+public:
+	Foo sorted() &&;
+	Foo sorted() const &;
+private:
+	std::vector<int> data;
+};
 
+Foo Foo::sorted() &&
+{
+	std::cout << "Foo Foo::sorted() &&" << std::endl;
+	sort(data.begin(), data.end());
+	return *this;
+}
 
+Foo Foo::sorted() const &
+{
+	std::cout << "Foo Foo::sorted() const &" << std::endl;
+	return Foo(*this).sorted();
+}
+```
 
 ---
 P493	14.3
 分别使用了以下版本的==：
-a) const char 
-(b) string
-(c) vector
-(d) string
+a) const char     
+(b) string     
+(c) vector     
+(d) string      
 
 ---
 P500	14.20
-
-
+*为你的Sales_data类定义加法和复合赋值运算符。*
+代码如下：
+```
+Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs) {
+	Sales_data temp(lhs);
+	temp += rhs;
+	return temp;
+}//复合运算符
+Sales_data& Sales_data::operator+=(const Sales_data &rhs) {
+	units_sold += rhs.units_sold;
+	revenue += rhs.revenue;
+	return *this;
+}//加法运算符
+```
 
 ---
-
 P509	14.38
+Q：*编写一个类令其检查某个给定的string对象的长度是否与一个阀值相等。使用该对象编写程序，统计并报告在输入的文件中长度为1的单词有多少个、长度为2的单词有多少个、……、长度为10的单词又有多少个。*
+代码如下：
+```
+class checklength {
+	size_t sz;
+	public:
+		checklength(size_t n) : sz(n) {}
+		bool operator()(const string &str) {
+			return str.size() == sz;
+	}
+}
+```
 
 
 ---
 P522	14.52
+Q:*在下面的加法表达式中分别选用了哪个operator？列出候选函数、可行函数及为每个可行函数的实参执行的类型转换。*
+
+```
+struct longDouble {
+  	longDouble operator+(const SmallInt&);
+  };
+  longDouble operator+(longDouble&, double);
+  SmallInt si;
+  longDouble ld;
+  ld = si + ld;
+  ld = ld + si;
+```
+
 
 ---
 P539	15.12
-
+Q:有必要将一个成员函数同时声明成override和final吗？为什么？
+A：有必要。override可被使于说明派生类的虚函数。其优点在于能更清晰地传达给编译器我们希望覆盖掉已存在的虚函数。若定义的虚函数与基类中的名字相同而形参列表有异，在不用override关键字的情况下此类定义为合法，使用则为非法；final：当某函数被定义为final，则后续的派生类不允许覆盖该函数。
 
 ---
 P542	15.16
+Q：改写你在15.2.2节练习中编写的数量受限的折扣策略，令其继承Disc_quote。
+```
+class Limited_quote : public Disc_quote
+{
+	Limited_quote(const string &book = "", double sales_price = 0.0, size_t qty = 0, double disc_rate = 0.0) : Disc_quote(book, sales_price, qty, disc_rate) { }
+	double net_price(size_t cnt) const override
+	{
+		if (cnt <= quantity)
+			return cnt * (1 - discount) * price;
+		else
+			return quantity * (1 - discount) * price + (cnt - quantity) *price;
+	}
+};
+```
 
 ---
 P562	15.30
-
+Q:编写你自己的Basket类，用它计算上一个练习中交易记录的总价格。
+```
+class Basket
+{
+public:
+	void add(const std::shared_ptr<Quote> &sale) { items.insert(sale); }
+	double total_receipt(std::ostream&) const;
+private:
+	static bool jijiao(const std::shared_ptr<Quote> &lhs, const std::shared_ptr<Quote> &rhs)
+	{
+		return lhs->isbn() < rhs->isbn();
+	}
+	std::multiset<std::shared_ptr<Quote>, decltype(compare)*> items{compare};
+};
+ 
+double Basket::total_receipt(ostream &os) const
+{
+	double sum = 0.0;
+	for(auto iter = items.cbegin(); iter != items.cend(); iter = items.upper_bound(*iter))
+	{
+		sum += print_total(os, **iter, items.count(*iter));
+	}
+	os << "总价为: " << sum << endl;
+	return sum;
+}
+```
+PS：该代码参考实例修改而来
