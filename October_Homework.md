@@ -48,11 +48,58 @@ int main(int argc,char *argv[])
 
 ----
 P331	9.52
+代码如下：
+```
+#include <iostream>
+#include <stack>
+using namespace std;
+    
+int main(int argc,char *argv[])
+{
+    string s;
+    cin>> s ;
+    int sum=0;
+    stack<char> charstack;
+    string::size_type loc=0;
+    while(loc< s.length()){
+        if(s[loc]=='('){
+            while(s[loc]!=')'){
+                cout<< s[loc]<<endl;
+                charstack.push(s[loc]);
+                loc++;
+            }
+        }//此时停留在‘)’位置
+        while(charstack.top()!='('){
+            //if(charstack.top()>='0' && charstack.top()<='9')
+                sum+=int(charstack.top());
+           // charstack.pop();
+        }
+        charstack.pop();
+        charstack.push(sum);
+        break;
+    }
+    cout<< charstack.size()<<endl;
+    cout<< int(charstack.top())<<endl;
+    cout<< sum<<endl;
+}
+```//以上代码对括号中表达式的处理仅为加法
+
+
 
 
 
 ---
-P339	10.3	10.15
+P339	10.3	
+accumulate（定义在<numeric>中）:只读算法
+```  
+
+```
+
+---
+P349 10.15
+
+
+---
 P365	10.34
 P370	10.42
 P381	11.12
