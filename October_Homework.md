@@ -1,3 +1,5 @@
+十月份作业
+#C++
 # 十月份C++作业
 ## P301	9.1
 
@@ -7,12 +9,12 @@
 
 
 
-----
+---
 ## P302	9.20
 
 
 
-----
+---
 ## P315	9.29
 `vec.resize`可用于改变容器大小：如果当前大小>要求大小-容器后部元素会被删除；如果当前大小<要求大小-新元素将被添加到容器后部。   
 vec目前包含25个元素    
@@ -52,7 +54,7 @@ int main(int argc,char *argv[])
 ----
 ## P331	9.52
 代码如下：
-`
+```
 #include <iostream>
 #include <stack>
 using namespace std;
@@ -84,8 +86,8 @@ int main(int argc,char *argv[])
     cout<< charstack.size()<<endl;
     cout<< int(charstack.top())<<endl;
     cout<< sum<<endl;
-}`//以上代码对括号中表达式的处理仅为加法
-
+}//以上代码对括号中表达式的处理仅为加法
+```
 
 
 
@@ -93,11 +95,11 @@ int main(int argc,char *argv[])
 ---
 ## P339	10.3	
 accumulate（定义在<numeric>中）:只读算法
-`
+```
 vector<int> s;
 int sum;
 sum=accumulate(s.cbegain(),s.cend(),0);
-`
+```
 sum即为s中各元素之和。
 
 ---
@@ -107,7 +109,8 @@ lambda表达式：[](){};
 
 ---
 ## P365	10.34
-`#include <iostream>
+```
+#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -128,19 +131,21 @@ int main()
 {
     ReverseIterator();
     return 0;
-}`
+}
+```
 
 ---
 ## P370	10.42
 代码如下：
-`void quchong(list<string> &words){
+```
+void quchong(list<string> &words){
     sort(words.begin(), words.end());
     list.unique();
-}`
-
+}
+```
 ---
 ## P381	11.12
-`
+```
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -162,7 +167,7 @@ int main() {
     for (auto &p : v)
         cout << p.first << "   " << p.second << endl;
 }
-`
+```
 
 ---
 ## P383	11.17	
@@ -176,10 +181,10 @@ int main() {
 3.将c中的元素按照顺序依次插入到v的尾部；
 4.同3。
 
-----
+---
 ## P396	11.38
 单词计数程序，代码如下：
-`
+```
 #include <iostream>
 #include <vector>
 #include <string>
@@ -202,42 +207,147 @@ int main()
     fun();
     return 0;
 }
-`
+```
+单词替换代码如下：
+```
 
+```
 
-----
+---
 ## P446	13.12
-`bool fun(const Sales_data *trans, Sales_data accum)
+```
+bool fun(const Sales_data *trans, Sales_data accum)
 {
     Sales_data item1(*trans), item2(accum);
     return item1.isbn() != item2.isbn();
 }
-`
+```
 Q：发生几次析构函数调用？
 *分析：* 一共会发生三次析构函数调用。局部变量item1、item2以及临时变量accum在函数结束后销毁；指针trans无析构函数。
 
 ---
 ## P452	13.18
+Q:定义一个Employee类，它包含雇员的姓名和唯一的雇员证号。为这个类定义默认构造函数，以及接受一个表示雇员姓名的string的构造函数。每个构造函数应该通过递增一个static数据成员来生成一个唯一的证号。
+代码如下：
+```
+class Employee {
+public:
+	Employee() { id = unique++; };
+	Employee(const std::string& str) : name(str) { id = unique++; };
+private:
+	std::string name;
+	int id;
+	static int unique;
+};
+int static unique = 0;
+```
 
 
-
-----
+---
 ## P472	13.46
+Q：什么类型的引用可以绑定到下面的初始化器上？
+```
+int f();
+vector<int> vi(100);
+int? r1 = f();
+int? r2 = vi[0];
+int? r3 = r1;
+int? r4 = vi[0] * f();
+```
+&&:右值引用
+&：左值引用
+`int&& r1 = f();`右值引用
+`int& r2 = vi[0];`左值引用
+`int&& r3 = r1;`右值引用
+`int& r4 = vi[0 *f();`左值引用
 
-
-----
+---
 P481	13.49
+为你的StrVec、String和Message类添加一个移动构造函数和一个移动赋值运算符。
+StrVec代码如下：
+```
+StrVec(StrVec &&s) noexcept : elements(s.elements), first_free(s.first_free), cap(s.cap)
+	{ s.elements = s.first_free = s.cap = nullptr; }
+	StrVec operator=(StrVec &&rhs)noexcept
+	{
+		if (this != &rhs) {
+			free();
+			elements = rhs.elements;
+			first_free = rhs.first_free;
+			cap = rhs.cap;
+			rhs.elements = rhs.cap = rhs.first_free = nullptr;
+		}
+		return *this;
+}
+```
+String代码如下：
+```
+String(String &&s) :str(s.str) noexcept
+	{
+		s.str.clear();
+	}
+	String operator=(String &&rhs) noexcept
+	{
+		if (this != &rhs) {
+			str.clear();
+			str = rhs.str;
+		}
+		return *this;
+	}
+```
+Message代码如下：
+```
+
+Message::Message(Message &&m) :contents(std::move(m.contents)) 
+{
+	move_Folders(&m);
+}
+Message Message::operator=(Message &&rhs)
+{
+	if (this != &rhs) {
+		remove_from_Folders();
+		contents = std; :move(rhs.contens);
+		move_Folders(&rhs);
+	}
+	return *this;
+}
+
+```
 
 
 ---
 P485	13.58
 
 
-----
+
+---
 P493	14.3
+分别使用了以下版本的==：
+a) const char 
+(b) string
+(c) vector
+(d) string
+
+---
 P500	14.20
+
+
+
+---
+
 P509	14.38
+
+
+---
 P522	14.52
+
+---
 P539	15.12
+
+
+---
 P542	15.16
+
+---
 P562	15.30
+
