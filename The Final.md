@@ -40,5 +40,5 @@ pull操作完成：
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/8.png)    
 
 ---
-## 借用电脑后在ubuntu系统下继续完成达作业     
+## 借用电脑后在ubuntu系统下继续完成大作业    
 
