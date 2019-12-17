@@ -5,10 +5,11 @@
 于其他课程需要已经安装了windows虚拟机，碍于存储空间选择了使用docker完成本次的大作业。*
 ---
 ## 安装docker并搭建nebula环境：
-使用docker创建nebula graph:
-注册docker账号
-依照流程先后进行了命令：docker pull vesoft/nenula-graph
-![image](https://github.com/AngelSXD/sxd_first_repository/blob/master/images/20160615165142.png)
+
+使用docker创建nebula graph:    
+注册docker账号    
+依照流程先后进行了命令：docker pull vesoft/nenula-graph     
+![image](https://github.com/johnson-623/johnson1/images/.png)
 ---
 pull操作完成：
 [image:4242AD8F-4940-4C1D-A178-99FDD0FDACE9-4459-00000E3C4EE57134/截屏2019-12-17下午2.07.35.png]
