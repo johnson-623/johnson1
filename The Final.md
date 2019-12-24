@@ -3,6 +3,7 @@
 
 说明：实现初期所用的设备是mac且由于其他课程需要已经安装了windows虚拟机，碍于存储空间选择了使用docker；
 但由于依赖安装脚本不兼容mac版本的docker，实现后期更换了设备在ubuntu系统下完成本次大作业，虽然一波三折，但是颇有收获！
+即nebula graph的正常运行时在mac环境下实现的；源代码的修改编译以及单元测试部分是在ubuntu系统中完成。
 
 ---
 ## 安装docker并搭建nebula环境：   
@@ -74,7 +75,7 @@ bash> cp etc/nebula-storaged.conf.default etc/nebula-storaged.conf
 ###
 
 ---
-### 
+### 修改源代码以及编译
 ```
 #include "base/Base.h"
 #include <gtest/gtest.h>
@@ -95,7 +96,6 @@ TEST(Duration, elapsedInSeconds) {
     }
 }
 
-
 TEST(Duration, elapsedInMilliSeconds) {
     Duration dur;
     for (int i = 0; i < 200; i++) {
@@ -103,4 +103,26 @@ TEST(Duration, elapsedInMilliSeconds) {
         auto start = std::chrono::steady_clock::now();
         usleep(5000);   // Sleep for 5 ms
         auto diff = std::chrono::steady_clock::now() - start;
-```
+        dur.pause();
+
+        // Allow 1ms difference
+        ASSERT_LE(std::chrono::duration_cast<std::chrono::milliseconds>(diff).count(),
+                  dur.elapsedInMSec()) << "Inaccuracy in iteration " << i;
+        ASSERT_GE(std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() + 1,
+                  dur.elapsedInMSec()) << "Inaccuracy in iteration " << i;
+    }
+}
+
+
+int main(int argc, char** argv) {
+    testing::InitGoogleTest(&argc, argv);
+    folly::init(&argc, &argv, true);
+    google::SetStderrLogging(google::INFO);
+
+    return RUN_ALL_TESTS();
+}
+```    
+### 修改源码后，在nebula/build/src/common/time/test路径下执行make操作，单独编译被修改的文件。
+![image](https://github.com/johnson-623/johnson1/blob/master/images/a.jpg)
+
+---
