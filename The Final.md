@@ -121,8 +121,16 @@ int main(int argc, char** argv) {
 
     return RUN_ALL_TESTS();
 }
-```    
+```  
+---  
 ### 修改源码后，在nebula/build/src/common/time/test路径下执行make操作，单独编译被修改的文件。
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/a.jpg)
 
 ---
+该程序用于测试延迟，usleep()函数的延迟误差利用fastNowInMicroSec()函数进行计算，同时给出了并给出了误差的均值以及延迟的方差。slowNowInMicroSec()在速度较慢的同时具有更高的精确程度。 
+![image](https://github.com/johnson-623/johnson1/blob/master/images/b.jpg)
+
+---
+
+
+
