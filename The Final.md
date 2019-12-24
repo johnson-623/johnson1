@@ -30,17 +30,77 @@ pull操作完成：
 创建三个tag和两个edge：    
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/6.png)
 ### *至此为止，nebula已可以正常运行*    
+
+### git clone https://github.com/vesoft-inc/nebula ，网速较慢，但是过程非常顺利。
+### 但是当我安装依赖的过程中出现报错“unkown system”，vim脚本文件发现该脚本文件与mac系统不兼容，
+因此我选择采取第二方案：换用设备（搭载ubuntu系统）
    
 ---
-## 错误的发现以及对错    
-但是当我运行脚本.sh文件时遇到报错：“unkown system”  
-原因：分析脚本代码后发现该脚本是基于ubuntu编写的，在mac环境下无法正常运行    
-![image](https://github.com/johnson-623/johnson1/blob/master/images/7.png)   
+###
+按顺序执行以下指令
+```
+sudo apt install git 
+ssh-keygen -t rsa -C "2690538311@qq.com"
+cd  ~/.ssh
+more id_rsa.pub
+```
+依次安装git；配置环境（创建密钥并拷贝至github中）
+---
+### 将代码克隆至本地
+`git clone https://github.com/vesoft-inc/nebula`
+### 安装依赖包
+```
+cd nebula
+ ./build_dep.sh
+ source ~/.bashrc
+ mkdir build
+```
+### 创建build文件夹并进行cmake
+```
+cd build
+cmake ..
+make
+sudo make install
+```    
+等待make的过程等待时间较长
+### 进一步安装文件，完成nebula的配置
+```
+cd /usr/local/nebula
+bash> cp etc/nebula-graphd.conf.default etc/nebula-graphd.conf
+bash> cp etc/nebula-metad.conf.default etc/nebula-metad.conf
+bash> cp etc/nebula-storaged.conf.default etc/nebula-storaged.conf
+```
+###
+###
 
 ---
-分析脚本代码后，利用brew先后安装了rpm后，考虑到脚本的信息量对我而言过于庞大，选择借用同学搭载了ubuntu系统的电脑进一步进行学习。    
-![image](https://github.com/johnson-623/johnson1/blob/master/images/8.png)    
+### 
+```
+#include "base/Base.h"
+#include <gtest/gtest.h>
+#include "time/Duration.h"
 
----
-## 借用电脑后在ubuntu系统下继续完成大作业    
+using nebula::time::Duration;
 
+TEST(Duration, elapsedInSeconds) {
+    for (int i = 0; i < 5; i++) {
+        Duration dur;
+        auto start = std::chrono::steady_clock::now();
+        sleep(2);
+        auto diff = std::chrono::steady_clock::now() - start;
+        dur.pause();
+
+        ASSERT_EQ(std::chrono::duration_cast<std::chrono::seconds>(diff).count(),
+                  dur.elapsedInSec()) << "Inaccuracy in iteration " << i;
+    }
+}
+
+
+TEST(Duration, elapsedInMilliSeconds) {
+    Duration dur;
+    for (int i = 0; i < 200; i++) {
+        dur.reset();
+        auto start = std::chrono::steady_clock::now();
+        usleep(5000);   // Sleep for 5 ms
+        auto diff = std::chrono::steady_clock::now() - start;
+```
