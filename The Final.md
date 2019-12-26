@@ -83,6 +83,39 @@ bash> cp etc/nebula-storaged.conf.default etc/nebula-storaged.conf
 
 using nebula::time::Duration;
 
+ 
+TEST(WallClock , time1 ) {
+
+    std::vector<int64_t> timer;
+    std::vector<int64_t>s;
+
+    for (uint32_t i = 0; i < 10; i++) {
+
+        auto sec=WallClock::slowNowInMicroSec();
+        usleep(3000);
+        auto sec2=WallClock::slowNowInMicroSec();
+        auto cost_time=sec2-sec;
+        timer.push_back(cost_time);
+    }
+    std::cout << timer[0] << std::endl;
+    int64_t sum=std::accumulate(timer.begin(),timer.end(),0);
+    double average=sum*1.0/10;
+    std::cout << "Mean Error  : " << average-3000 << "ms "<<std::endl;
+
+    for(int i = 0; i < 10 ; i++ ){
+        int64_t a=(timer[i]-average)*(timer[i]-average);
+        s.push_back(a);
+    }
+
+    int64_t sum2=std::accumulate(s.begin(),s.end(),0);
+    double variance=sum2*1.0/9;
+    std::cout << "The  Variance  Is : "<< variance << std::endl;
+    double error=( abs(average-3000) * 1.0 / 3000) * 100;
+    std :: cout << "Test Error Is  : " << error  << "%" << std::endl;
+
+}
+
+
 TEST(Duration, elapsedInSeconds) {
     for (int i = 0; i < 5; i++) {
         Duration dur;
@@ -112,8 +145,6 @@ TEST(Duration, elapsedInMilliSeconds) {
                   dur.elapsedInMSec()) << "Inaccuracy in iteration " << i;
     }
 }
-
-
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     folly::init(&argc, &argv, true);
@@ -121,11 +152,12 @@ int main(int argc, char** argv) {
 
     return RUN_ALL_TESTS();
 }
+
 ---  
 ### 修改源码后，在nebula/build/src/common/time/test路径下执行make操作，单独编译被修改的文件。
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/a.jpg)
 ---
-该程序用于测试延迟，usleep()函数的延迟误差利用fastNowInMicroSec()函数进行计算，同时给出了并给出了误差的均值以及延迟的方差。slowNowInMicroSec()在速度较慢的同时具有更高的精确程度。 
+该程序用于测试延迟，usleep()函数的延迟误差利用fastNowInMicroSec()函数进行计算，同时计算出了时间误差的均值。可以得出结论：slowNowInMicroSec()在速度较慢的同时具有更高的精确程度。 
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/b.jpg)
 ---
 ```
@@ -141,6 +173,7 @@ git remote//查看自己设置的所有名字
 ### git push时遇到报错：
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/c.jpg)
 **解决方案是先输入git pull命令后重试git push**
+
 ---
 
 
