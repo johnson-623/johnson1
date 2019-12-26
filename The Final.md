@@ -129,7 +129,7 @@ int main(int argc, char** argv) {
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/b.jpg)
 ---
 ```
-### 通过 `git config --global user.name"johnson-623"` 以及 `git config --global user.email"2690538311" `绑定自己的github账号以及邮箱
+### 通过 `git config --global user.name"johnson-623"` 以及 `git config --global user.email"2690538311@qq.com" `绑定自己的github账号以及邮箱
 ### 依次执行以下指令：
 ```
 git status//检查文件是否存在改动
