@@ -121,11 +121,16 @@ int main(int argc, char** argv) {
 
     return RUN_ALL_TESTS();
 }
+---  
+### 修改源码后，在nebula/build/src/common/time/test路径下执行make操作，单独编译被修改的文件。
+![image](https://github.com/johnson-623/johnson1/blob/master/images/a.jpg)
+---
+该程序用于测试延迟，usleep()函数的延迟误差利用fastNowInMicroSec()函数进行计算，同时给出了并给出了误差的均值以及延迟的方差。slowNowInMicroSec()在速度较慢的同时具有更高的精确程度。 
+![image](https://github.com/johnson-623/johnson1/blob/master/images/b.jpg)
+---
 ```
 ### 通过 `git config --global user.name"johnson-623"` 以及 `git config --global user.email"2690538311" `绑定自己的github账号以及邮箱
-
----
-### 执行：
+### 依次执行以下指令：
 ```
 git status//检查文件是否存在改动
 git add//加入上传文件到缓存
@@ -136,19 +141,8 @@ git remote//查看自己设置的所有名字
 ### git push时遇到报错：
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/c.jpg)
 **解决方案是先输入git pull命令后重试git push**
-
 ---
 
-
----  
-### 修改源码后，在nebula/build/src/common/time/test路径下执行make操作，单独编译被修改的文件。
-![image](https://github.com/johnson-623/johnson1/blob/master/images/a.jpg)
-
----
-该程序用于测试延迟，usleep()函数的延迟误差利用fastNowInMicroSec()函数进行计算，同时给出了并给出了误差的均值以及延迟的方差。slowNowInMicroSec()在速度较慢的同时具有更高的精确程度。 
-![image](https://github.com/johnson-623/johnson1/blob/master/images/b.jpg)
-
----
 
 
 
