@@ -121,7 +121,25 @@ int main(int argc, char** argv) {
 
     return RUN_ALL_TESTS();
 }
-```  
+```
+### 通过 `git config --global user.name"johnson-623"` 以及 `git config --global user.email"2690538311" `绑定自己的github账号以及邮箱
+
+---
+### 执行：
+```
+git status//检查文件是否存在改动
+git add//加入上传文件到缓存
+git commit//将缓存区内容添加到本地仓库中
+git push//将改动后的文件上传到自己的GitHub仓库中
+git remote//查看自己设置的所有名字
+```
+### git push时遇到报错：
+
+**解决方案是先输入git pull命令后重试git push**
+
+---
+
+
 ---  
 ### 修改源码后，在nebula/build/src/common/time/test路径下执行make操作，单独编译被修改的文件。
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/a.jpg)
