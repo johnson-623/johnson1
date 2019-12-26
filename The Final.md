@@ -152,7 +152,7 @@ int main(int argc, char** argv) {
 
     return RUN_ALL_TESTS();
 }
-
+```
 ---  
 ### 修改源码后，在nebula/build/src/common/time/test路径下执行make操作，单独编译被修改的文件。
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/a.jpg)
@@ -160,8 +160,7 @@ int main(int argc, char** argv) {
 该程序用于测试延迟，usleep()函数的延迟误差利用fastNowInMicroSec()函数进行计算，同时计算出了时间误差的均值。可以得出结论：slowNowInMicroSec()在速度较慢的同时具有更高的精确程度。 
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/b.jpg)
 ---
-```
-### 通过 `git config --global user.name"johnson-623"` 以及 `git config --global user.email"2690538311@qq.com" `绑定自己的github账号以及邮箱
+通过 `git config --global user.name"johnson-623"` 以及 `git config --global user.email"2690538311@qq.com" `绑定自己的github账号以及邮箱
 ### 依次执行以下指令：
 ```
 git status//检查文件是否存在改动
