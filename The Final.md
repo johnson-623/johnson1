@@ -134,7 +134,7 @@ git push//将改动后的文件上传到自己的GitHub仓库中
 git remote//查看自己设置的所有名字
 ```
 ### git push时遇到报错：
-
+![image](https://github.com/johnson-623/johnson1/blob/master/images/c.jpg)
 **解决方案是先输入git pull命令后重试git push**
 
 ---
