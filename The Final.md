@@ -175,6 +175,9 @@ git remote//查看自己设置的所有名字
 **解决方案是先输入git pull命令后重试git push**
 
 ---
+### 选择已修改的分支，提交Pull Request
+---
+## 大作业心得
 
 
 
