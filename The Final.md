@@ -169,6 +169,10 @@ git commit//将缓存区内容添加到本地仓库中
 git push//将改动后的文件上传到自己的GitHub仓库中
 git remote//查看自己设置的所有名字
 ```
+![image](https://github.com/johnson-623/johnson1/blob/master/images/d.jpg)
+`git branch change`
+`git checkout change`
+
 ### git push时遇到报错：
 ```
 mac@macdeMBP test % git push --set-upstream origin change
