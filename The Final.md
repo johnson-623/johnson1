@@ -170,8 +170,23 @@ git push//将改动后的文件上传到自己的GitHub仓库中
 git remote//查看自己设置的所有名字
 ```
 ### git push时遇到报错：
+```
+mac@macdeMBP test % git push --set-upstream origin change
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+mac@macdeMBP test % git push --set-upstream origin change
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+```
+**解决方案：重新生成密钥**
+
+`fatal: The current branch change has no upstream branch.`
+
 ![image](https://github.com/johnson-623/johnson1/blob/master/images/c.jpg)
-**解决方案是先输入git pull命令后重试git push**
+**解决方案：先输入git pull命令后重试git push**
 
 ---
 ### 选择已修改的分支，提交Pull Request
